@@ -13,6 +13,7 @@ import replace from '@rollup/plugin-replace'
 import typescript from './lib/rollup-typescript'
 import renderHtmlTemplate from './lib/render-html-template'
 import svgResolver from './lib/rollup-svg-resolver'
+import assets from './lib/rollup-assets'
 
 rimraf.sync('./dist/')
 rimraf.sync('./.ts-tmp/')
@@ -40,6 +41,7 @@ export default ({ watch }) => ({
     commonjs(),
     OMT(),
     svgResolver(),
+    assets('./src/assets/'),
     postcss({
       minimize: isProd,
       extract: true,
