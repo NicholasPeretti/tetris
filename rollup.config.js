@@ -9,6 +9,7 @@ import purgecss from '@fullhuman/postcss-purgecss'
 import cssnano from 'cssnano'
 import { uglify } from 'rollup-plugin-uglify'
 import replace from '@rollup/plugin-replace'
+import minify from 'rollup-plugin-babel-minify'
 
 import typescript from './lib/rollup-typescript'
 import renderHtmlTemplate from './lib/render-html-template'
@@ -66,6 +67,9 @@ export default ({ watch }) => ({
             ]
           : []),
       ],
+    }),
+    minify({
+      comments: false,
     }),
     html({
       title: 'Tetris',

@@ -23,6 +23,7 @@
     "preact-transition-group": "^1.1.1",
     "rimraf": "^3.0.2",
     "rollup": "^1.31.1",
+    "rollup-plugin-babel-minify": "^9.1.1",
     "rollup-plugin-postcss": "^2.1.1",
     "rollup-plugin-uglify": "^6.0.4",
     "tailwindcss": "^1.2.0",
