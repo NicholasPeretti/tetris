@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": ".ts-tmp",
+    "module": "ESNext",
+    "target": "ES5",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "resolveJsonModule": true,
+    "composite": true,
+    "baseUrl": "./",
+    "rootDir": "./",
+  },
+  "include": [
+    "./src/**/*",
+    "./missing-types.d.ts",
+  ],
+  "exclude": [
+    "./src/assets/**/*"
+  ]
+}

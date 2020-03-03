@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="nice-background">
+  <head>
+    <title><%= title%></title>
+
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Orbitron&display=swap"
+      rel="stylesheet"
+    />
+
+    <% files.css.forEach(cssFile => { %>
+    <link rel="stylesheet" type="text/css" href="<%- cssFile.fileName %>" />
+    <% }); %> <% workers.forEach(jsFile => { %>
+    <link rel="preload" href="<%- jsFile.fileName %>" as="worker" />
+    <% }); %>
+    <!-- dynamicImports -->
+    <% mainJsFile.dynamicImports.forEach(jsFile => { %>
+    <link rel="preload" href="<%- jsFile %>" as="script" />
+    <% }); %>
+    <!-- Imports -->
+    <% mainJsFile.imports.forEach(jsFile => { %>
+    <link rel="preload" href="<%- jsFile %>" as="script" />
+    <% }); %>
+  </head>
+  <body>
+    <script>
+      <%- mainJsFile.code %>
+    </script>
+  </body>
+</html>

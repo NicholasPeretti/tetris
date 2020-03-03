@@ -1,0 +1,71 @@
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+@tailwind utilities;
+
+body {
+  height: 100%;
+}
+
+@keyframes appear-in-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink-animation {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.nice-background {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top, #14486d 20%, #042438 80%);
+}
+
+.animated-background {
+  animation-name: animated-background-animation;
+  animation-timing-function: ease-in;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.text-orbitron {
+  font-family: 'Orbitron';
+}
+
+.appear-in {
+  animation: appear-in-animation 3s ease-out;
+}
+
+.blink {
+  animation: blink-animation 3s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 3s;
+}
+
+.blink:hover {
+  animation: none;
+}
+
+.bg-opaque-light {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.bg-opaque-dark {
+  background-color: rgba(0, 0, 0, 0.75);
+}
