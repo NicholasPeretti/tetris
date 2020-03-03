@@ -36,10 +36,19 @@
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1"
     />
+
     <link
-      href="https://fonts.googleapis.com/css?family=Orbitron&display=swap"
-      rel="stylesheet"
+      href="assets/Orbitron-Regular-subset.ttf"
+      rel="preload"
+      as="font"
+      crossorigin
     />
+    <style>
+      @font-face {
+        font-family: Orbitron;
+        src: url(assets/Orbitron-Regular-subset.ttf);
+      }
+    </style>
 
     <% files.css.forEach(cssFile => { %>
     <link rel="stylesheet" type="text/css" href="<%- cssFile.fileName %>" />
