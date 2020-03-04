@@ -80,22 +80,20 @@ export default function HomeRoute({}: Props) {
     }
     const onMouseDown = (e: MouseEvent) => {
       //  Set swipe starting point
-      mouseCoordinates = {
-        x: e.clientX,
-        y: e.clientY,
-      }
+      mouseCoordinates = getPointerCoordinates(e)
     }
     const onMouseUp = (e: MouseEvent) => {
       //  The user has released the finger
-      const deltaX = mouseCoordinates.x - e.clientX
-      const deltaY = mouseCoordinates.y - e.clientY
+      const coordinates = getPointerCoordinates(e)
+      const deltaX = mouseCoordinates.x - coordinates.x
+      const deltaY = mouseCoordinates.y - coordinates.y
 
       //  Calculate direction
       const isVerticalDirection = Math.abs(deltaY) > Math.abs(deltaX)
       const isSwipeUp = isVerticalDirection && deltaY >= 0
       const isSwipeDown = isVerticalDirection && deltaY < 0
-      const isSwipeRight = !isVerticalDirection && deltaX >= 0
-      const isSwipeLeft = !isVerticalDirection && deltaX < 0
+      const isSwipeRight = !isVerticalDirection && deltaX < 0
+      const isSwipeLeft = !isVerticalDirection && deltaX >= 0
 
       if (isSwipeDown) {
         movePiece(Direction.DOWN)
@@ -120,10 +118,14 @@ export default function HomeRoute({}: Props) {
 
     window.addEventListener('mousedown', onMouseDown)
     window.addEventListener('mouseup', onMouseUp)
+    window.addEventListener('touchstart', onMouseDown)
+    window.addEventListener('touchend', onMouseUp)
 
     return () => {
       window.removeEventListener('mousedown', onMouseDown)
       window.removeEventListener('mouseup', onMouseUp)
+      window.removeEventListener('touchstart', onMouseDown)
+      window.removeEventListener('touchend', onMouseUp)
     }
   }, [])
 
@@ -148,4 +150,13 @@ export default function HomeRoute({}: Props) {
       </div>
     </div>
   )
+}
+
+function getPointerCoordinates(
+  e: MouseEvent | TouchEvent
+): { x: number; y: number } {
+  return {
+    x: e instanceof MouseEvent ? e.clientX : e.changedTouches[0].clientX,
+    y: e instanceof MouseEvent ? e.clientY : e.changedTouches[0].clientY,
+  }
 }
