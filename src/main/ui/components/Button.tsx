@@ -3,6 +3,7 @@ import { h } from 'preact'
 export enum Variant {
   primary,
   secondary,
+  gameControl,
 }
 
 export type Props = {
@@ -22,11 +23,13 @@ export default function Button({
   variant = Variant.primary,
   onClick,
 }: Props) {
+  const buttonClass =
+    variant === Variant.gameControl
+      ? 'bg-transparent p-2'
+      : `text-orbitron tracking-widest text-xl rounded py-4 px-6 ${classes[variant]}`
+
   return (
-    <button
-      onClick={onClick}
-      class={`text-orbitron tracking-widest text-xl rounded py-4 px-6 ${classes[variant]} ${className}`}
-    >
+    <button onClick={onClick} class={`${buttonClass} ${className}`}>
       {children}
     </button>
   )

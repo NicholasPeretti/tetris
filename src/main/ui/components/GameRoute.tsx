@@ -1,8 +1,10 @@
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
 import useGameController, { Direction } from '../hooks/useGameController'
+import useMobileDetector from '../hooks/useMobileDetector'
 import TetrisCanvas from './TetrisCanvas'
 import GameOverBanner from './GameOverBanner'
+import Button, { Variant } from './Button'
 import { route } from 'preact-router'
 
 export type Props = {
@@ -24,6 +26,7 @@ export default function HomeRoute({}: Props) {
   const score = gameState ? gameState.game.score : 1
   const isGameOver = gameState ? gameState.isGameOver : false
   const level = Math.floor(score / LEVEL_SIZE)
+  const isMobileBrowser = useMobileDetector()
 
   //  Start game loop
   useEffect(() => {
@@ -91,6 +94,44 @@ export default function HomeRoute({}: Props) {
       <div class="bg-white rounded-sm p-4 bg-opaque-light">
         <TetrisCanvas />
       </div>
+      {isMobileBrowser && (
+        <div className="px-4 w-full">
+          <div className="flex flex-row justify-evenly items-center bg-gray-900 text-white rounded-sm mt-4 w-full text-xl">
+            <Button
+              onClick={() => {
+                movePiece(Direction.LEFT)
+              }}
+              variant={Variant.gameControl}
+            >
+              &#8637;
+            </Button>
+            <Button
+              onClick={() => {
+                rotatePiece()
+              }}
+              variant={Variant.gameControl}
+            >
+              &#8635;
+            </Button>
+            <Button
+              onClick={() => {
+                movePiece(Direction.DOWN)
+              }}
+              variant={Variant.gameControl}
+            >
+              &#8643;
+            </Button>
+            <Button
+              onClick={() => {
+                movePiece(Direction.RIGHT)
+              }}
+              variant={Variant.gameControl}
+            >
+              &#8641;
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
