@@ -72,6 +72,61 @@ export default function HomeRoute({}: Props) {
     }
   }, [])
 
+  //  Map to swipes from smartphone
+  useEffect(() => {
+    let mouseCoordinates = {
+      x: 0,
+      y: 0,
+    }
+    const onMouseDown = (e: MouseEvent) => {
+      //  Set swipe starting point
+      mouseCoordinates = {
+        x: e.clientX,
+        y: e.clientY,
+      }
+    }
+    const onMouseUp = (e: MouseEvent) => {
+      //  The user has released the finger
+      const deltaX = mouseCoordinates.x - e.clientX
+      const deltaY = mouseCoordinates.y - e.clientY
+
+      //  Calculate direction
+      const isVerticalDirection = Math.abs(deltaY) > Math.abs(deltaX)
+      const isSwipeUp = isVerticalDirection && deltaY >= 0
+      const isSwipeDown = isVerticalDirection && deltaY < 0
+      const isSwipeRight = !isVerticalDirection && deltaX >= 0
+      const isSwipeLeft = !isVerticalDirection && deltaX < 0
+
+      if (isSwipeDown) {
+        movePiece(Direction.DOWN)
+        return
+      }
+
+      if (isSwipeLeft) {
+        movePiece(Direction.LEFT)
+        return
+      }
+
+      if (isSwipeRight) {
+        movePiece(Direction.RIGHT)
+        return
+      }
+
+      if (isSwipeUp) {
+        rotatePiece()
+        return
+      }
+    }
+
+    window.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mouseup', onMouseUp)
+
+    return () => {
+      window.removeEventListener('mousedown', onMouseDown)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+  }, [])
+
   return (
     <div class="h-full w-full text-center flex flex-col justify-center items-center">
       {isGameOver && (
