@@ -18,3 +18,10 @@ declare global {
 window.gameController = wrap<GameController>(new Worker('./worker.ts'))
 
 renderApp()
+
+//  Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+  })
+}

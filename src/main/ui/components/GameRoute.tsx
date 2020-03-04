@@ -77,6 +77,7 @@ export default function HomeRoute({}: Props) {
       {isGameOver && (
         <GameOverBanner
           onClickHome={() => {
+            reset()
             route('/')
           }}
           onClickRestart={() => {

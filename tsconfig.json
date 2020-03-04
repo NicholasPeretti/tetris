@@ -11,12 +11,6 @@
     "composite": true,
     "baseUrl": "./",
     "rootDir": "./",
-  },
-  "include": [
-    "./src/**/*",
-    "./missing-types.d.ts",
-  ],
-  "exclude": [
-    "./src/assets/**/*"
-  ]
+    "sourceMap": true,
+  }
 }
