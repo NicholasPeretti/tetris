@@ -35,6 +35,7 @@
     "build": "NODE_ENV='production' rollup -c && yarn gzip",
     "watch": "rollup -c -w",
     "serve": "http-server dist -p 80 -c-1 -g",
+    "serve:https": "mkcert -cert-file dist/cert.pem -key-file dist/key.pem 127.0.0.1 && yarn serve -S -C dist/cert.pem -K dist/key.pem",
     "test": "jest"
   },
   "dependencies": {
