@@ -26,6 +26,7 @@ export default function HomeRoute({}: Props) {
     movePiece,
     rotatePiece,
     reset,
+    dropActivePiece,
   } = useGameController()
   const [isPaused, setIsPaused] = useState(false)
   const score = gameState ? gameState.game.score : 1
@@ -76,6 +77,10 @@ export default function HomeRoute({}: Props) {
         case ESC_KEYCODE:
         case P_KEYCODE: {
           setIsPaused(!isPaused)
+          break
+        }
+        case 32: {
+          dropActivePiece()
           break
         }
       }
@@ -155,6 +160,17 @@ export default function HomeRoute({}: Props) {
             <Button
               onClick={() => {
                 if (!isPaused) movePiece(Direction.DOWN)
+
+                dropActivePiece()
+              }}
+              variant={Variant.gameControl}
+            >
+              {/* DROP PIECE */}
+              &#8675;
+            </Button>
+            <Button
+              onClick={() => {
+                movePiece(Direction.DOWN)
               }}
               variant={Variant.gameControl}
             >

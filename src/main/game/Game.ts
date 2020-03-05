@@ -96,6 +96,15 @@ export function isPieceMovableTo(game: Game, direction: Direction): boolean {
   return isPieceDrawableAt(game.board, game.activePiece, targetX, targetY)
 }
 
+export function dropActivePiece(game: Game): Game {
+  let updatedGameState = game
+  while (isPieceMovableTo(updatedGameState, Direction.DOWN)) {
+    updatedGameState = moveActivePiece(updatedGameState, Direction.DOWN)
+  }
+
+  return updatedGameState
+}
+
 export function getCoordinatesByDirection(
   game: Game,
   direction: Direction

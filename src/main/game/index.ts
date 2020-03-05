@@ -1,7 +1,6 @@
 import {
   Game,
   getNewGame,
-  duplicateGame,
   isPieceMovableTo,
   Direction,
   moveActivePiece,
@@ -9,6 +8,7 @@ import {
   rotateActivePiece,
   ShareableGameState,
   getSharableGameState,
+  dropActivePiece,
 } from './Game'
 
 export type GameState = {
@@ -74,6 +74,13 @@ export default class GameController {
     if (this.isGameOver()) return this.getGameState()
 
     this.gameState = rotateActivePiece(this.gameState)
+    return this.getGameState()
+  }
+
+  dropPiece(): GameState {
+    if (this.isGameOver()) return this.getGameState()
+
+    this.gameState = dropActivePiece(this.gameState)
     return this.getGameState()
   }
 

@@ -70,7 +70,13 @@ export default function useGameController() {
     setGameState(updatedGameState)
   })
 
-  const { movePiece, rotatePiece, reset, iterate } = window.gameController
+  const {
+    movePiece,
+    rotatePiece,
+    reset,
+    iterate,
+    dropPiece,
+  } = window.gameController
 
   return {
     gameState,
@@ -85,6 +91,9 @@ export default function useGameController() {
     },
     async iterate() {
       gameStateProxy.setGameState(await iterate())
+    },
+    async dropActivePiece() {
+      gameStateProxy.setGameState(await dropPiece())
     },
   }
 }
