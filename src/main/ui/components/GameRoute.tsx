@@ -1,5 +1,5 @@
-import { h } from 'preact'
-import { useEffect } from 'preact/hooks'
+import { h, Fragment } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 import useGameController, { Direction } from '../hooks/useGameController'
 import useMobileDetector from '../hooks/useMobileDetector'
 import TetrisCanvas from './TetrisCanvas'
@@ -15,6 +15,9 @@ const INITIAL_GAME_VELOCITY = 600
 const MIN_GAME_VELOCITY = 150
 const LEVEL_SIZE = 500
 
+const ESC_KEYCODE = 27
+const P_KEYCODE = 80
+
 export default function HomeRoute({}: Props) {
   const {
     iterate,
@@ -23,6 +26,7 @@ export default function HomeRoute({}: Props) {
     rotatePiece,
     reset,
   } = useGameController()
+  const [isPaused, setIsPaused] = useState(false)
   const score = gameState ? gameState.game.score : 1
   const isGameOver = gameState ? gameState.isGameOver : false
   const level = Math.floor(score / LEVEL_SIZE)
@@ -30,6 +34,9 @@ export default function HomeRoute({}: Props) {
 
   //  Start game loop
   useEffect(() => {
+    //  Don't create the interval if the game is paused
+    if (isPaused) return
+
     const gameVelocity = INITIAL_GAME_VELOCITY - level * 50
     const isTooFast = gameVelocity < MIN_GAME_VELOCITY
 
@@ -43,26 +50,31 @@ export default function HomeRoute({}: Props) {
     return () => {
       clearInterval(intervalId)
     }
-  }, [level])
+  }, [level, isPaused])
 
   //  Bind keystrokes to game controls
   useEffect(() => {
     const onKeyDown = e => {
       switch (e.keyCode) {
         case 37: {
-          movePiece(Direction.LEFT)
+          if (!isPaused) movePiece(Direction.LEFT)
           break
         }
         case 38: {
-          rotatePiece()
+          if (!isPaused) rotatePiece()
           break
         }
         case 39: {
-          movePiece(Direction.RIGHT)
+          if (!isPaused) movePiece(Direction.RIGHT)
           break
         }
         case 40: {
-          movePiece(Direction.DOWN)
+          if (!isPaused) movePiece(Direction.DOWN)
+          break
+        }
+        case ESC_KEYCODE:
+        case P_KEYCODE: {
+          setIsPaused(!isPaused)
           break
         }
       }
@@ -73,7 +85,7 @@ export default function HomeRoute({}: Props) {
     return () => {
       window.removeEventListener('keydown', onKeyDown)
     }
-  }, [])
+  }, [isPaused])
 
   return (
     <div class="h-full w-full text-center flex flex-col justify-center items-center">
@@ -99,34 +111,51 @@ export default function HomeRoute({}: Props) {
           <div className="flex flex-row justify-evenly items-center bg-gray-900 text-white rounded-sm mt-4 w-full text-xl">
             <Button
               onClick={() => {
-                movePiece(Direction.LEFT)
+                if (!isPaused) movePiece(Direction.LEFT)
               }}
               variant={Variant.gameControl}
             >
+              {/* LEFT */}
               &#8637;
             </Button>
             <Button
               onClick={() => {
-                rotatePiece()
+                if (!isPaused) rotatePiece()
               }}
               variant={Variant.gameControl}
             >
+              {/* ROTATE */}
               &#8635;
             </Button>
             <Button
               onClick={() => {
-                movePiece(Direction.DOWN)
+                setIsPaused(!isPaused)
               }}
               variant={Variant.gameControl}
             >
+              {/* PLAY/PAUSE */}
+              {isPaused ? (
+                <Fragment>&#9658;</Fragment>
+              ) : (
+                <Fragment>&#10073; &#10073;</Fragment>
+              )}
+            </Button>
+            <Button
+              onClick={() => {
+                if (!isPaused) movePiece(Direction.DOWN)
+              }}
+              variant={Variant.gameControl}
+            >
+              {/* DOWN */}
               &#8643;
             </Button>
             <Button
               onClick={() => {
-                movePiece(Direction.RIGHT)
+                if (!isPaused) movePiece(Direction.RIGHT)
               }}
               variant={Variant.gameControl}
             >
+              {/* RIGHT */}
               &#8641;
             </Button>
           </div>
