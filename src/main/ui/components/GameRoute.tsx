@@ -14,7 +14,7 @@ export type Props = {
 
 const INITIAL_GAME_VELOCITY = 600
 const MIN_GAME_VELOCITY = 150
-const LEVEL_SIZE = 500
+const LEVEL_SIZE = 200
 
 const ESC_KEYCODE = 27
 const P_KEYCODE = 80
