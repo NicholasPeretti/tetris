@@ -11,8 +11,7 @@ a killer UI/UX to my users.
 
 ## Features
 
-- [ ] SSR (build step)
-- [ ] PWA (sw)
+- [x] PWA (sw)
 - [x] Worker to handle the game logic
 
 ## Tech stack
