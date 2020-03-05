@@ -4,6 +4,7 @@ import useGameController, { Direction } from '../hooks/useGameController'
 import useMobileDetector from '../hooks/useMobileDetector'
 import TetrisCanvas from './TetrisCanvas'
 import GameOverBanner from './GameOverBanner'
+import PauseBanner from './PauseBanner'
 import Button, { Variant } from './Button'
 import { route } from 'preact-router'
 
@@ -97,6 +98,17 @@ export default function HomeRoute({}: Props) {
           }}
           onClickRestart={() => {
             reset()
+          }}
+        />
+      )}
+      {!isGameOver && isPaused && (
+        <PauseBanner
+          onClickHome={() => {
+            reset()
+            route('/')
+          }}
+          onClickResume={() => {
+            setIsPaused(false)
           }}
         />
       )}
